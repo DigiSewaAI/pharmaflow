@@ -9,8 +9,8 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <!-- खोज, फिल्टर, Add बटन -->
-                <div class="flex justify-between items-center mb-4">
-                    <form method="GET" class="flex gap-2">
+                <div class="flex flex-wrap justify-between items-center mb-4 gap-2">
+                    <form method="GET" class="flex flex-wrap gap-2">
                         <input type="text" name="search" placeholder="खोज्नुहोस्..." value="{{ request('search') }}" class="rounded border-gray-300">
                         <select name="category_id" class="rounded border-gray-300">
                             <option value="">सबै श्रेणी</option>
@@ -31,6 +31,13 @@
                         <button onclick="openModal()" class="bg-blue-600 text-white px-4 py-2 rounded">+ नयाँ</button>
                     </div>
                 </div>
+
+                <!-- सफलता सन्देश -->
+                @if(session('success'))
+                    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4">
+                        {{ session('success') }}
+                    </div>
+                @endif
 
                 <!-- तालिका -->
                 <table class="min-w-full divide-y divide-gray-200">

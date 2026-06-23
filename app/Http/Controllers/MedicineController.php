@@ -49,7 +49,6 @@ class MedicineController extends Controller
         ]);
 
         $medicine = Medicine::create($validated);
-        // स्टक ट्रान्जेक्सन थप्नुहोस् यदि quantity > 0 भए
         if ($medicine->quantity > 0) {
             $medicine->updateStock($medicine->quantity, 'in', 'initial_stock');
         }
@@ -74,7 +73,6 @@ class MedicineController extends Controller
         $oldQty = $medicine->quantity;
         $medicine->update($validated);
 
-        // यदि quantity परिवर्तन भएमा ट्रान्जेक्सन थप्नुहोस्
         if ($medicine->quantity != $oldQty) {
             $diff = $medicine->quantity - $oldQty;
             $type = $diff > 0 ? 'in' : 'out';
@@ -90,7 +88,6 @@ class MedicineController extends Controller
         return redirect()->route('medicines.index')->with('success', 'औषधि हटाइयो।');
     }
 
-    // Import/Export
     public function import(Request $request)
     {
         $request->validate(['file' => 'required|mimes:xlsx,csv']);
