@@ -6,5 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class InventoryTransaction extends Model
 {
-    //
+    protected $fillable = [
+        'medicine_id',
+        'type',
+        'quantity',
+        'batch',
+        'reason',
+        'user_id',
+    ];
+
+    public function medicine()
+    {
+        return $this->belongsTo(Medicine::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

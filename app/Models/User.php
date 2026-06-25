@@ -14,7 +14,6 @@ use Illuminate\Notifications\Notifiable;
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
     /**
@@ -28,5 +27,16 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // ─── Relationships for Dashboard ───
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
+
+    public function inventoryTransactions()
+    {
+        return $this->hasMany(InventoryTransaction::class);
     }
 }
