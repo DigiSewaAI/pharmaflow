@@ -6,6 +6,7 @@ use App\Models\Medicine;
 use App\Models\InventoryTransaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Events\LowStockDetected; // ✅ Event for low stock notification
 
 class InventoryController extends Controller
 {
@@ -116,6 +117,11 @@ class InventoryController extends Controller
             'user_id' => auth()->id(),
         ]);
 
+        // 🔔 Check if stock is now low and broadcast notification
+        if ($medicine->quantity < 30) {
+            event(new LowStockDetected($medicine, auth()->id()));
+        }
+
         if ($request->wantsJson()) {
             return response()->json([
                 'success' => true,
@@ -155,6 +161,11 @@ class InventoryController extends Controller
                 'reason' => 'Adjustment: ' . $request->reason,
                 'user_id' => auth()->id(),
             ]);
+        }
+
+        // 🔔 Check if stock is low after adjustment
+        if ($medicine->quantity < 30) {
+            event(new LowStockDetected($medicine, auth()->id()));
         }
 
         if ($request->wantsJson()) {

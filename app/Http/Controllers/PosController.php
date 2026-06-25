@@ -8,6 +8,7 @@ use App\Models\SaleItem;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Events\SaleCompleted; // ✅ Event for real-time notification
 
 class PosController extends Controller
 {
@@ -224,6 +225,9 @@ class PosController extends Controller
                     'user_id' => auth()->id(),
                 ]);
             }
+
+            // 🔔 Broadcast real-time notification for this sale
+            event(new SaleCompleted($sale, auth()->id()));
 
             // Clear cart
             session()->forget('pos_cart');

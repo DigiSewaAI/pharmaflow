@@ -121,9 +121,10 @@
                 <button class="theme-toggle" onclick="toggleTheme()">
                     <i class="fas fa-moon" id="dashThemeIcon"></i>
                 </button>
-                <button class="topbar-btn" onclick="navigate('notifications')">
-                    <i class="fas fa-bell"></i><span class="dot"></span>
-                </button>
+
+                {{-- Notification Dropdown Component --}}
+                @include('components.notification-dropdown', ['unreadCount' => $unreadCount ?? 0])
+
                 <div class="avatar" onclick="navigate('settings')">
                     {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
                 </div>
