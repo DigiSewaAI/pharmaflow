@@ -9,12 +9,13 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles; // 👈 Add this
 
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles; // 👈 Add HasRoles
 
     /**
      * Get the attributes that should be cast.
@@ -38,5 +39,11 @@ class User extends Authenticatable
     public function inventoryTransactions()
     {
         return $this->hasMany(InventoryTransaction::class);
+    }
+
+    // ─── Accessor for avatar initials ───
+    public function getInitialsAttribute()
+    {
+        return strtoupper(substr($this->name, 0, 2));
     }
 }

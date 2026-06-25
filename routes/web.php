@@ -88,10 +88,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/notifications/unread-count', [NotificationController::class, 'unreadCount'])->name('notifications.unread-count');
     Route::get('/notifications/recent', [NotificationController::class, 'recent'])->name('notifications.recent');
 
-    // ─── Users ───
+    // ─── Users (Phase I) ───
     Route::resource('users', UserController::class);
 
-    // ─── Settings ───
+    // ─── Settings (Phase I) ───
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
     Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
 
